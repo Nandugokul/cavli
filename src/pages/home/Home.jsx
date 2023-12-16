@@ -1,10 +1,16 @@
 import ProductCard from "./components/ProductCard";
 import data from "../../data/data.json";
 import AddToCartFilter from "./components/AddToCartFilter";
-
-console.log(data);
+import { useState } from "react";
 
 function Home() {
+  const [openFilter, setOpenFilter] = useState(false);
+  const [filterProduct, setFilterProduct] = useState("");
+
+  const handleOpenFilter = (filterOpen, category) => {
+    setOpenFilter(filterOpen);
+    setFilterProduct(category);
+  };
   return (
     <>
       <section className="max-w-screen-xl flex flex-col items-center p-16 m-auto">
@@ -14,14 +20,21 @@ function Home() {
           {data.map((item) => {
             return (
               <ProductCard
-                key={item.productId}
-                productName={item.productName}
-                productSpec={item.formFactors}
+                key={item.category}
+                category={item.category}
+                productId={item.category}
+                openFilter={handleOpenFilter}
               />
             );
           })}
         </section>
-        <AddToCartFilter />
+        <AddToCartFilter
+          filterOpen={openFilter}
+          setFilterOpen={() => {
+            setOpenFilter(false);
+          }}
+          filterCategory={filterProduct}
+        />
       </section>
     </>
   );
