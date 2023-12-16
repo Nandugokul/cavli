@@ -1,13 +1,19 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
-let initialState = { quantity: 5 };
+let initialState = {
+  quantity: 5,
+  form: "",
+  productName: "",
+  region: "",
+  cartDataList: [],
+};
 const cartUpdate = createSlice({
   name: "cartUpdate",
   initialState: initialState,
   reducers: {
     getCartData(state, actions) {
-      console.log(actions.payload.productName);
-      console.log(actions.payload);
+      let { quantity, uniqueId, productName, region, form } = actions.payload;
+      console.log(quantity, uniqueId, productName, region, form);
     },
   },
 });

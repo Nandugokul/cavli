@@ -89,12 +89,18 @@ function AddToCartFilter(props) {
     const updatedQuantityData = { ...quantityData };
 
     Object.entries(data).forEach(([uniqueId, newQuantity]) => {
-      const product = filteredList.find((item) => item.uniqueId === uniqueId);
+      if (updatedQuantityData.hasOwnProperty(uniqueId)) {
+        const product = filteredList.find((item) => item.uniqueId === uniqueId);
 
-      if (product) {
-        updatedQuantityData[product.productName] = {
+        if (product) {
+          updatedQuantityData[uniqueId] = {
+            productName: product.productName,
+            quantity: newQuantity,
+          };
+        }
+      } else {
+        updatedQuantityData[uniqueId] = {
           quantity: newQuantity,
-          // Add other properties as needed
         };
       }
     });

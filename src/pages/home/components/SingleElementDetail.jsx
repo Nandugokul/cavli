@@ -1,36 +1,67 @@
 /* eslint-disable react/prop-types */
+
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { cartSliceActions } from "../../../store/cart";
 
 function SingleElementDetail(props) {
-  const handleQuantityDecrese = () => {
+  const cartDispatch = useDispatch();
+  const handleQuantityDecrese = (e) => {
     if (cartData.quantity > 5) {
-      const newQuantity = cartData.quantity - 1;
-      setCartData({ ...cartData, quantity: newQuantity });
-      props.quantityChange({ [props.uniqueId]: newQuantity });
+      setCartData({
+        ...cartData,
+        quantity: cartData.quantity - 1,
+        uniqueId: e.target.value,
+        productName: e.target.dataset.productname,
+        region: e.target.dataset.region,
+        form: e.target.dataset.form,
+      });
     } else if (cartData.quantity === 5) {
       setButtonChange(false);
+      setCartData({
+        ...cartData,
+        quantity: 5,
+        uniqueId: null,
+        productName: "",
+        region: "",
+        form: "",
+      });
     }
   };
-  const handleQuantityIncrease = () => {
+  const handleQuantityIncrease = (e) => {
     if (cartData.quantity < 10) {
-      const newQuantity = cartData.quantity + 1;
-      setCartData({ ...cartData, quantity: newQuantity });
-      props.quantityChange({ [props.uniqueId]: newQuantity });
+      setCartData({
+        ...cartData,
+        quantity: cartData.quantity + 1,
+        uniqueId: e.target.value,
+        productName: e.target.dataset.productname,
+        region: e.target.dataset.region,
+        form: e.target.dataset.form,
+      });
     }
   };
-
-  const handleAddVariant = () => {
+  const handleAddVariant = (e) => {
     setButtonChange(true);
+    setCartData({
+      ...cartData,
+      quantity: cartData.quantity,
+      uniqueId: e.target.value,
+      productName: e.target.dataset.productname,
+      region: e.target.dataset.region,
+      form: e.target.dataset.form,
+    });
   };
   const [buttonChange, setButtonChange] = useState(false);
-  const [cartData, setCartData] = useState({});
-  const cartUpdate = useSelector((state) => {
-    return state.cartUpdate;
+  const [cartData, setCartData] = useState({
+    quantity: 5,
+    uniqueId: "",
+    productName: "",
+    region: "",
+    form: "",
   });
   useEffect(() => {
-    setCartData(cartUpdate);
-  }, [cartUpdate]);
+    cartDispatch(cartSliceActions.getCartData(cartData));
+  }, [cartData]);
   return (
     <>
       <div className="flex py-4">
@@ -48,6 +79,10 @@ function SingleElementDetail(props) {
         </div>
         <div className="w-[25%] flex justify-center items-center">
           <button
+            data-productname={props.productName}
+            data-region={props.region}
+            data-form={props.formFactor}
+            value={props.uniqueId}
             onClick={handleAddVariant}
             className={`bg-blue-700 text-white font-semibold rounded-2xl px-4 py-1 ${
               buttonChange ? "hidden" : "block"
@@ -57,7 +92,11 @@ function SingleElementDetail(props) {
           </button>
           <div className={`${buttonChange ? "block" : "hidden"} flex`}>
             <button
+              data-productname={props.productName}
+              data-region={props.region}
+              data-form={props.formFactor}
               onClick={handleQuantityDecrese}
+              value={props.uniqueId}
               className="bg-blue-700 rounded-tl-xl rounded-bl-xl h-8 w-8 text-white"
             >
               -
@@ -66,6 +105,10 @@ function SingleElementDetail(props) {
               {cartData.quantity}
             </div>
             <button
+              data-productname={props.productName}
+              data-region={props.region}
+              data-form={props.formFactor}
+              value={props.uniqueId}
               onClick={handleQuantityIncrease}
               className="bg-blue-700 rounded-tr-xl rounded-br-xl h-8 w-8 text-white"
             >
