@@ -6,6 +6,7 @@ let initialState = {
   productName: "",
   region: "",
   cartDataList: [],
+  addToCart: false,
 };
 const cartUpdate = createSlice({
   name: "cartUpdate",
@@ -28,7 +29,15 @@ const cartUpdate = createSlice({
               { quantity, uniqueId, productName, region, form },
             ];
       state.cartDataList = updatedCartDataList;
-      console.log(state.cartDataList);
+    },
+    addToCart(state, action) {
+      state.addToCart = action.payload;
+    },
+    deleteFromCart(state, action) {
+      const uniqueIdToRemove = action.payload;
+      state.cartDataList = state.cartDataList.filter(
+        (item) => item.uniqueId !== uniqueIdToRemove
+      );
     },
   },
 });

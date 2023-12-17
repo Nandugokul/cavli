@@ -32,7 +32,6 @@ function AddToCartFilter(props) {
       );
     });
 
-    console.log(filteredItems);
     setfilteredList(filteredItems);
   }, [sim, region, form]);
 
@@ -107,7 +106,6 @@ function AddToCartFilter(props) {
     });
 
     setQuantityData(updatedQuantityData);
-    console.log(updatedQuantityData);
     cartDispatch(cartSliceActions.getCartData(updatedQuantityData));
   };
 
@@ -253,6 +251,7 @@ function AddToCartFilter(props) {
               <button
                 onClick={() => {
                   props.setFilterOpen(false);
+                  cartDispatch(cartSliceActions.addToCart(true));
                 }}
                 className="px-4 py-2 border border-blue-700 bg-blue-700 text-white rounded-md"
               >

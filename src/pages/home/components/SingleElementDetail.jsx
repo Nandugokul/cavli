@@ -18,14 +18,15 @@ function SingleElementDetail(props) {
       });
     } else if (cartData.quantity === 5) {
       setButtonChange(false);
-      setCartData({
-        ...cartData,
-        quantity: 5,
-        uniqueId: null,
-        productName: "",
-        region: "",
-        form: "",
-      });
+      // setCartData({
+      //   ...cartData,
+      //   quantity: 5,
+      //   uniqueId: e.target.value,
+      //   productName: "",
+      //   region: "",
+      //   form: "",
+      // });
+      cartDispatch(cartSliceActions.deleteFromCart(e.target.value));
     }
   };
   const handleQuantityIncrease = (e) => {
@@ -60,7 +61,7 @@ function SingleElementDetail(props) {
     form: "",
   });
   useEffect(() => {
-    if (cartData.uniqueId !== "") {
+    if (cartData.uniqueId !== "" && cartData.uniqueId !== null) {
       cartDispatch(cartSliceActions.getCartData(cartData));
     }
   }, [cartData]);

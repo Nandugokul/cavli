@@ -2,13 +2,15 @@ import { useSelector } from "react-redux";
 import cartIcon from "../../public/images/home/cartIcon.svg";
 import closeIcon from "../../public/images/home/closeIcon.svg";
 
-import CartSingleListing from "../store/components/CartSingleListing";
+import CartSingleListing from "./components/CartSingleListing";
 import { useState } from "react";
 function CartComponent() {
   const [cartOpen, setCartOpen] = useState(false);
   const cartUpdate = useSelector((state) => state.cartUpdate.cartDataList);
+  const cartShouldBeListedOrNot = useSelector(
+    (state) => state.cartUpdate.addToCart
+  );
   const noOfCartItems = cartUpdate.length;
-  console.log(cartUpdate);
   return (
     <>
       <section className="fixed bottom-10 right-10">
@@ -17,7 +19,7 @@ function CartComponent() {
             setCartOpen(true);
           }}
           className={`bg-blue-700 w-[4rem] h-[4rem] flex items-center justify-center rounded-full relative ${
-            noOfCartItems >= 1 ? "flex" : "hidden"
+            noOfCartItems >= 1 && cartShouldBeListedOrNot ? "flex" : "hidden"
           }`}
         >
           <img src={cartIcon} alt="" />
@@ -36,14 +38,16 @@ function CartComponent() {
         } `}
       >
         {cartUpdate.map((item) => {
-          return (
-            <CartSingleListing
-              key={item.uniqueId}
-              productName={item.productName}
-              quantity={item.quantity}
-              region={item.region}
-            />
-          );
+          if (item.productName !== "" && item.productName !== null) {
+            return (
+              <CartSingleListing
+                key={item.uniqueId}
+                productName={item.productName}
+                quantity={item.quantity}
+                region={item.region}
+              />
+            );
+          }
         })}
         <div
           onClick={() => setCartOpen(false)}
