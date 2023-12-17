@@ -37,18 +37,20 @@ function CartComponent() {
           cartOpen ? "block" : "hidden"
         } `}
       >
-        {cartUpdate.map((item) => {
-          if (item.productName !== "" && item.productName !== null) {
-            return (
-              <CartSingleListing
-                key={item.uniqueId}
-                productName={item.productName}
-                quantity={item.quantity}
-                region={item.region}
-              />
-            );
-          }
-        })}
+        <div className="overflow-y-scroll h-[80vh]">
+          {cartUpdate.map((item) => {
+            if (item.productName !== "" && item.productName !== null) {
+              return (
+                <CartSingleListing
+                  key={item.uniqueId}
+                  productName={item.productName}
+                  quantity={item.quantity}
+                  region={item.region}
+                />
+              );
+            }
+          })}
+        </div>
         <div
           onClick={() => setCartOpen(false)}
           className="px-8 py-3 text-white font-bold bg-black absolute bottom-4 right-4"

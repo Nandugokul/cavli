@@ -3,9 +3,9 @@ import productImg from "../../../public/images/home/cavliProductImg.png";
 function CartSingleListing(props) {
   return (
     <>
-      <div>
+      <div className="my-4 border-black/50 border p-2">
         <img src={productImg} alt="" className="w-[20%]" />
-        <div className="grid grid-cols-3 mt-4 border-y-2 py-2">
+        <div className="grid grid-cols-3 mt-4 border-t-2 py-2">
           <div>
             <h1 className="text-xl font-medium mb-3">Item</h1>
             <h4>{props.productName}</h4>
