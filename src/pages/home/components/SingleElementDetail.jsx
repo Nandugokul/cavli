@@ -60,7 +60,9 @@ function SingleElementDetail(props) {
     form: "",
   });
   useEffect(() => {
-    cartDispatch(cartSliceActions.getCartData(cartData));
+    if (cartData.uniqueId !== "") {
+      cartDispatch(cartSliceActions.getCartData(cartData));
+    }
   }, [cartData]);
   return (
     <>

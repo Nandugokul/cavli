@@ -11,9 +11,24 @@ const cartUpdate = createSlice({
   name: "cartUpdate",
   initialState: initialState,
   reducers: {
-    getCartData(state, actions) {
-      let { quantity, uniqueId, productName, region, form } = actions.payload;
-      console.log(quantity, uniqueId, productName, region, form);
+    getCartData(state, action) {
+      const { quantity, uniqueId, productName, region, form } = action.payload;
+      const existingItemIndex = state.cartDataList.findIndex(
+        (item) => item.uniqueId === uniqueId
+      );
+      const updatedCartDataList =
+        existingItemIndex !== -1
+          ? [
+              ...state.cartDataList.slice(0, existingItemIndex),
+              { quantity, uniqueId, productName, region, form },
+              ...state.cartDataList.slice(existingItemIndex + 1),
+            ]
+          : [
+              ...state.cartDataList,
+              { quantity, uniqueId, productName, region, form },
+            ];
+      state.cartDataList = updatedCartDataList;
+      console.log(state.cartDataList);
     },
   },
 });

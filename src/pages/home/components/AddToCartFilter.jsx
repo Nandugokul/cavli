@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
 import { cartSliceActions } from "../../../store/cart";
 import closeIcon from "../../../../public/images/home/closeIcon.svg";
+import CartComponent from "../../../ui/CartComponent";
 
 function AddToCartFilter(props) {
   // const [filter, setFilter] = useState({
@@ -269,6 +270,7 @@ function AddToCartFilter(props) {
           </div>
         </div>
       </section>
+      <CartComponent />
     </>
   );
 }
