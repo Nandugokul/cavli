@@ -11,6 +11,7 @@ function Home() {
     setOpenFilter(filterOpen);
     setFilterProduct(category);
   };
+  console.log(data);
   return (
     <>
       <section className="max-w-screen-xl flex flex-col items-center p-16 m-auto">
@@ -23,6 +24,7 @@ function Home() {
                 key={item.category}
                 category={item.category}
                 productId={item.category}
+                productNumber={item.products.length}
                 openFilter={handleOpenFilter}
               />
             );
